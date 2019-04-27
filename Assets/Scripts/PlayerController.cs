@@ -6,6 +6,8 @@ public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     public float speed;
+    public bool levelTrigger = false;
+    public float timer = 6;
 
     // Start is called before the first frame update
     void Start()
@@ -16,7 +18,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        timer -= Time.deltaTime;
     }
 
     private void FixedUpdate()
@@ -34,6 +36,19 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Pick up"))
         {
             other.gameObject.SetActive(false);
+        } else if (other.gameObject.CompareTag("Level") && timer > 5)
+        {
+            levelTrigger = !levelTrigger;
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (levelTrigger)
+        {
+            GUI.skin.label.fontSize = 100;
+
+            GUI.Label(new Rect(Screen.width / 2.5f, Screen.height / 6.5f, 500, 500), "Level 1");
         }
     }
 }
