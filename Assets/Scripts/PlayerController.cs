@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
     public float speed;
-    public bool levelTrigger = false;
-    public float timer = 6;
+    private bool levelTrigger = false;
+    public float timer;
+    private int count;
+    public Text score;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        count = 0;
+        updateScore();
     }
 
     // Update is called once per frame
@@ -36,10 +42,18 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.CompareTag("Pick up"))
         {
             other.gameObject.SetActive(false);
-        } else if (other.gameObject.CompareTag("Level") && timer > 5)
+            count++;
+            updateScore();
+        }
+        else if (other.gameObject.CompareTag("Level") && timer > 5)
         {
             levelTrigger = !levelTrigger;
         }
+    }
+
+    void updateScore()
+    {
+        score.text = "Score: " + count.ToString();
     }
 
     private void OnGUI()
