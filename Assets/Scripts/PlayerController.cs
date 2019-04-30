@@ -6,11 +6,15 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
-    public float speed;
+
     private bool levelTrigger = false;
+
+    public float speed;
     public float timer;
+
     private int count;
     public Text score;
+    public Text gameOver;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +29,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         timer -= Time.deltaTime;
+
     }
 
     private void FixedUpdate()
