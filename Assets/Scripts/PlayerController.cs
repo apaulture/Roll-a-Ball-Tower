@@ -8,13 +8,16 @@ public class PlayerController : MonoBehaviour
     private Rigidbody rb;
 
     private bool levelTrigger = false;
-
-    public float speed;
-    public float timer;
-
+    private int timeRemaining;
     private int count;
+
     public Text score;
     public Text gameOver;
+    public Text textTimer;
+
+
+    public float time;
+    public float speed;
 
     // Start is called before the first frame update
     void Start()
@@ -23,13 +26,20 @@ public class PlayerController : MonoBehaviour
 
         count = 0;
         updateScore();
+
+
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        timer -= Time.deltaTime;
+        timeRemaining = (int)(time - Time.time);
+        textTimer.text = "Time: " + timeRemaining.ToString() + " seconds";
 
+        if (timeRemaining == 0)
+        {
+            gameOver.text = "Time's up!";
+            this.gameObject.SetActive(false);
+        }
     }
 
     private void FixedUpdate()
@@ -50,9 +60,15 @@ public class PlayerController : MonoBehaviour
             count++;
             updateScore();
         }
-        else if (other.gameObject.CompareTag("Level") && timer > 5)
+    }
+
+    void WinGame(Collider other)
+    {
+        if (other.gameObject.CompareTag("Treasure"))
         {
-            levelTrigger = !levelTrigger;
+            other.gameObject.SetActive(false);
+            this.gameObject.SetActive(false);
+            gameOver.text = "Stage complete!";
         }
     }
 
