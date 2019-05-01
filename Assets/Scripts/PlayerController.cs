@@ -58,7 +58,7 @@ public class PlayerController : MonoBehaviour
 
     void updateScore()
     {
-        score.text = "Score: " + count.ToString();
+            score.text = "Score: " + count.ToString();
     }
 
     private void OnGUI()
