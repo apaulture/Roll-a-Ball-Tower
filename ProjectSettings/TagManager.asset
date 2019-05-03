@@ -8,6 +8,15 @@ TagManager:
   - Level
   - Level2
   - Treasure
+  - StartLevel
+  - FloatLevel
+  - Lava
+  - PickupCarpet
+  - HiddenCamera
+  - Lightbar
+  - Cam
+  - Laser
+  - Ground
   layers:
   - Default
   - TransparentFX

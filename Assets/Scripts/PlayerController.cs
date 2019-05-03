@@ -3,31 +3,44 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
 {
     private Rigidbody rb;
 
-    private bool levelTrigger = false;
     private int timeRemaining;
     private int count;
+    public static bool changecam = false;
 
     public Text score;
     public Text gameOver;
     public Text textTimer;
 
-
     public float time;
     public float speed;
 
-    // Start is called before the first frame update
+    public bool isGrounded;
+
+    private AudioSource source;
+    public AudioClip pickupAudio;
+    public AudioClip lava;
+    public AudioClip treasure;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        source = GetComponent<AudioSource>();
 
         count = 0;
         updateScore();
+    }
 
-
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == ("Ground") && isGrounded == false)
+        {
+            isGrounded = true;
+        }
     }
 
     private void Update()
@@ -39,6 +52,12 @@ public class PlayerController : MonoBehaviour
         {
             gameOver.text = "Time's up!";
             this.gameObject.SetActive(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.AddForce(new Vector3(0, 5, 0), ForceMode.Impulse);
+            isGrounded = false;
         }
     }
 
@@ -59,31 +78,33 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             count++;
             updateScore();
-        }
-    }
-
-    void WinGame(Collider other)
-    {
-        if (other.gameObject.CompareTag("Treasure"))
+            source.PlayOneShot(pickupAudio,0.7f);
+        } 
+        else if (other.gameObject.CompareTag("Treasure"))
         {
+            source.PlayOneShot(treasure, 1);
             other.gameObject.SetActive(false);
-            this.gameObject.SetActive(false);
+            Destroy(gameObject, .2f);
             gameOver.text = "Stage complete!";
+        }
+        else if (other.gameObject.CompareTag("Lava"))
+        {
+            source.PlayOneShot(lava, 0.7f);
+            this.gameObject.transform.position = new Vector3(0, 135, 0);
+        }
+        else if (other.gameObject.CompareTag("Laser"))
+        {
+            source.PlayOneShot(lava, 0.7f);
+            this.gameObject.transform.position = new Vector3(0, 135, 0);
+        }
+        else if (other.gameObject.CompareTag("Cam"))
+        {
+            changecam = !changecam;
         }
     }
 
     void updateScore()
     {
             score.text = "Score: " + count.ToString();
-    }
-
-    private void OnGUI()
-    {
-        if (levelTrigger)
-        {
-            GUI.skin.label.fontSize = 100;
-
-            GUI.Label(new Rect(Screen.width / 2.5f, Screen.height / 6.5f, 500, 500), "Level 1");
-        }
     }
 }
