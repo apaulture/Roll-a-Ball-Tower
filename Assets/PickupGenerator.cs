@@ -17,7 +17,7 @@ public class PickupGenerator : MonoBehaviour
             }
         } else if (this.gameObject.CompareTag("StartLevel"))
         {
-            for (int i = 0; i <= 2; i++)
+            for (int i = 0; i <= 5; i++)
             {
                 Vector3 position = new Vector3(Random.Range(-16, 16), 132.5f, Random.Range(-9, 9));
                 Instantiate(prefab, position, Quaternion.identity);
@@ -33,9 +33,9 @@ public class PickupGenerator : MonoBehaviour
         }
         else if (this.gameObject.CompareTag("Lightbar"))
         {
-            for (int i = 0; i <= 350; i++)
+            for (int i = 0; i <= 300; i++)
             {
-                Vector3 position = new Vector3(Random.Range(-50, 50), Random.Range(-10, 30), Random.Range(93, 350));
+                Vector3 position = new Vector3(Random.Range(-40, 40), Random.Range(-10, 30), Random.Range(93, 350));
                 Instantiate(prefab, position, Quaternion.identity);
             }
         }

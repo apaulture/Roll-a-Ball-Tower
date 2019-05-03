@@ -15,7 +15,7 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         offset = transform.position - player.transform.position;
-        position = new Vector3(0, 0, 15);
+        position = new Vector3(0, 0, 10);
     }
 
     // Update is called once per frame

@@ -17,7 +17,9 @@ public class ColorChanger : MonoBehaviour
 
     void Update()
     {
-        lerpedColor = Color.Lerp(Color.HSVToRGB(Mathf.PingPong(Time.time, 1), 1,1), Color.HSVToRGB(Mathf.PingPong(Time.time, 1), 1, 1), Mathf.PingPong(Time.time, 3));
+        lerpedColor = Color.Lerp(Color.HSVToRGB(Mathf.PingPong(Time.time, 1), 1, 1), Color.HSVToRGB(Mathf.PingPong(Time.time, 1), 1, 1), Mathf.PingPong(Time.time, 3));
         rend.material.SetColor("_Color", lerpedColor);
-    }   
+    }
 }
+
+//lerpedColor = Color.Lerp(Color.HSVToRGB(Mathf.PingPong(Time.time, 1), 1,1), Color.HSVToRGB(Mathf.PingPong(Time.time, 1), 1, 1), Mathf.PingPong(Time.time, 3));
